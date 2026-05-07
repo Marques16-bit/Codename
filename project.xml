@@ -25,11 +25,6 @@
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
-	<haxedef name="native_vulkan" if="android" />
-    <haxedef name="openfl_disable_graphics_upscale" />
-
-    <assets path="assets/images" rename="images" include="*.astc|*.png|*.jpg" />
-
 	<!-- DO NOT REMOVE!! ALLOWS ME TO DO REGIONS LIKE IN C# AND KEEP CODE ORGANIZED. REMOVING IT WOULD BREAK THE ENGINE -->
 	<haxedef name="REGION" />
 
@@ -116,3 +111,4 @@
 	<define name="THREE_D_SUPPORT" unless="STRIPPED_COMPILE" />
 
 	<!-- Comment this out to disable support for Nape integration (flixel.addons.nape) (reduces compile times) !-->
+
