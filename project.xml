@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
+	<!-- _________________________ Application Settings _________________________ -->
+	<!-- ___ Build with spesific libraries ___ -->
 	<architecture exclude="armv7" if="ONLY_ARM64" />
 	<architecture exclude="armeabi-v7a" if="ONLY_ARM64" />
 	<architecture exclude="arm64" if="ONLY_ARMV7" />
@@ -11,53 +13,106 @@
 		package="com.yoshman29.codenameengine"
 		version="1.0.1" company="Yoshman29" />
 
+	<!--
+		CHANGE THE SAVE PATH & NAME FOR YOUR MOD HERE!
+	-->
 	<haxedef name="SAVE_PATH" value="CodenameEngine"/>
 	<haxedef name="SAVE_NAME" value="save-default"/>
+
 	<haxedef name="SAVE_OPTIONS_PATH" value="CodenameEngine"/>
 	<haxedef name="SAVE_OPTIONS_NAME" value="options"/>
 
+	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
+
+	<haxedef name="native_vulkan" if="android" />
+    <haxedef name="openfl_disable_graphics_upscale" />
+
+    <assets path="assets/images" rename="images" include="*.astc|*.png|*.jpg" />
+
+	<!-- DO NOT REMOVE!! ALLOWS ME TO DO REGIONS LIKE IN C# AND KEEP CODE ORGANIZED. REMOVING IT WOULD BREAK THE ENGINE -->
 	<haxedef name="REGION" />
 
+	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
+		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<app preloader="flixel.system.FlxPreloader" />
+
+	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
 
+	<!-- ____________________________ Window Settings ___________________________ -->
+
+	<!--These window settings apply to all targets-->
 	<window width="1280" height="720" background="#000000" hardware="true" vsync="false" />
+
+	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
+
+	<!--Desktop-specific-->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 	<window if="mac" allow-high-dpi="true" />
+
+	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+
+	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
 
-	<haxedef name="native_astc" if="android" />
-	<haxedef name="disable_premultiplied_alpha" if="android" />
-	<haxedef name="openfl_disable_graphics_upscale" if="mobile" />
+	<!-- _________________________________ Engine Settings _______________________________ -->
 
+	<!-- This is better thsn using #if mobile shit cuz this useful for multi port supported mods -->
 	<define name="ARKOSE_PORT"/>
+
+	<!-- Comment this out to disable updates !-->
 	<define name="UPDATE_CHECKING" unless="web || hl || neko || debug || mobile"/>
 
+	<!-- Comment this out to disable Discord RPC !-->
 	<section if="cpp">
 		<define name="DISCORD_RPC" if="desktop"/>
 	</section>
 
+	<!-- Uncomment this to achive faster compile times, will strip extraneous and commonly unused features. -->
+	<!-- <define name="STRIPPED_COMPILE" unless="debug"/> -->
+
+	<!-- Comment this out to disable modcharting features -->
 	<define name="MODCHARTING_FEATURES" unless="STRIPPED_COMPILE" />
+
+	<!-- Comment this out to disable GitHub API integration !-->
 	<define name="GITHUB_API" unless="web || hl"/>
+
+	<!-- Comment this out to prevent unused classes from being compiled.
+		 Reduces compilation time at the cost of limited HScript flexibility. !-->
 	<define name="COMPILE_ALL_CLASSES" unless="STRIPPED_COMPILE" />
+
+	<!-- Comment this out to prevent extending classes in hscript.
+		 Reduces compilation time at the cost of limited HScript flexibility. !-->
 	<define name="CUSTOM_CLASSES" unless="STRIPPED_COMPILE" />
+
+	<!-- Comment this out to disable abstract support in hscript. !-->
 	<haxedef name="HSCRIPT_ABSTRACT_SUPPORT" unless="STRIPPED_COMPILE" />
+
+	<!-- Comment this out to disable multithreading !-->
 	<haxedef name="ALLOW_MULTITHREADING" unless="web || flash" />
+
+	<!-- Comment this out to disable mods folder !-->
 	<haxedef name="MOD_SUPPORT" unless="web"/>
+
+	<!-- Comment this out to disable translations folders !-->
 	<haxedef name="TRANSLATIONS_SUPPORT"/>
+
+	<!-- Comment this out to disable global scripts !-->
 	<haxedef name="GLOBAL_SCRIPT" />
+
+	<!-- Comment this out to disable softcoded states and state scripting !-->
 	<haxedef name="SOFTCODED_STATES" />
+
+	<!-- Comment this out to disable support for custom ndlls. !-->
 	<haxedef name="NDLLS_SUPPORTED" unless="web || iphonesim || hl" />
+
+	<!-- Comment this out to use the default OpenFL assets system for the assets/ folder. !-->
 	<define name="USE_ADAPTED_ASSETS" unless="web" />
+
+	<!-- Comment this out to disable support for Away3D Flixel Integration (reduces compile times) !-->
 	<define name="THREE_D_SUPPORT" unless="STRIPPED_COMPILE" />
 
-	<assets path="assets/images" rename="images" include="*.astc|*.png|*.jpg" />
-	<assets path="mods" rename="mods" include="*.astc|*.png|*.jpg|*.json|*.hx|*.xml|*.txt" if="MOD_SUPPORT" />
-	
-	<assets path="assets/songs" rename="songs" include="*.ogg|*.json|*.txt" />
-	<assets path="assets/fonts" rename="fonts" include="*.ttf|*.otf" />
-	<assets path="assets/sounds" rename="sounds" include="*.ogg" />
-</project>
+	<!-- Comment this out to disable support for Nape integration (flixel.addons.nape) (reduces compile times) !-->
